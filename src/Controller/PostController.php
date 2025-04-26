@@ -64,6 +64,10 @@ final class PostController extends AbstractController
         if(!$post){
             return $this->redirectToRoute('app_posts');
         }
+        if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
+            throw new AccessDeniedException('Vous n\'avez pas les droits suffisants pour accéder à cette page.');
+
+        }
         $postForm = $this->createForm(PostType::class, $post);
         $postForm->handleRequest($request);
         if($postForm->isSubmitted() && $postForm->isValid()){
@@ -79,6 +83,10 @@ final class PostController extends AbstractController
     #[Route('/post/delete/{id}', name: 'app_post_delete', methods: ['POST'])]
     public function delete(Post $post, EntityManagerInterface $entityManager): Response
     {
+        if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
+            throw new AccessDeniedException('Vous n\'avez pas les droits suffisants pour accéder à cette page.');
+
+        }
         if($post){
             $entityManager->remove($post);
             $entityManager->flush();
