@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 final class PostController extends AbstractController
 {
@@ -38,6 +39,10 @@ final class PostController extends AbstractController
     #[Route('/post/create', name: 'app_post_create')]
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
+        if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
+            throw new AccessDeniedException('Vous n\'avez pas les droits suffisants pour accéder à cette page.');
+
+        }
         $post = new Post();
         $postForm = $this->createForm(PostType::class, $post);
         $postForm->handleRequest($request);
