@@ -14,8 +14,12 @@
             <li class="list-group-item">A third item</li>
         </ul>
         <div class="card-body">
-            <a href="{{ path('app_posts') }}" class="card-link">return</a>
-            <a href="#" class="card-link">Another link</a>
+            <a href="{{ path('app_posts') }}" class="card-link">Return</a>
+            <a href="{{ path('app_post_edit', {id:post.id}) }}" class="card-link">Edit</a>
+            <form method="post" action="{{ path('app_post_delete', {'id': post.id}) }}" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete_post_' ~ post.id) }}">
+                <button class="btn btn-danger">Delete</button>
+            </form>
         </div>
     </div>
 {% endblock %}

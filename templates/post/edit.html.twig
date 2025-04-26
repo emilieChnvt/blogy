@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% form_theme postForm 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+
+    <div class="d-flex justify-content-center">
+        <h2>Edit your post</h2>
+        <div class="d-flex mt-3 justify-content-center   border border-2 p-4  px-5 rounded-3" style="width: fit-content">
+
+            {{ form_start(postForm) }}
+
+            <p class="fw-bolder">{{ form_label(postForm.title) }}</p>
+            {{ form_widget(postForm.title, {'attr': {'style': 'background-color: #f8f9fa;'}}) }}
+            <p class="fw-bolder mt-4">{{ form_label(postForm.content) }}</p>
+            {{ form_widget(postForm.content, {'attr': {'style': 'background-color: #f8f9fa;'}}) }}
+
+            <button type="submit" class="btn btn-success mt-5">Create a Post</button>
+            {{ form_end(postForm) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
