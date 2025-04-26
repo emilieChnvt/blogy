@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="d-flex flex-column ">
+
+    {{ form_start(form, {'attr': {'class': 'd-flex flex-column align-items-left mt-4 p-3 border'}}) }}
+    {{ form_label(form.content) }}
+    {{ form_widget(form.content) }}
+    <button type="submit" class="mt-3 btn btn-outline-info">Edit your Comment</button>
+    {{ form_end(form) }}
+</div
+    {% endblock %}
