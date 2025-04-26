@@ -3,12 +3,13 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-<table class="table table-striped">
+<table class="table table-striped mt-5">
     <thead>
         <tr>
             <td>Id</td>
             <td>Email</td>
             <td>Roles</td>
+            <td>Action</td>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +21,13 @@
                     {% for role in user.roles %}
                         {{ role }}
                     {% endfor %}
+                </td>
+                <td>
+                    {% if 'ROLE_ADMIN' in user.roles %}
+                        <a href="{{ path('app_demote', {id:user.id}) }}" class="btn btn-danger">DEMOTE</a>
+                    {% else %}
+                        <a href="{{ path('app_promote', {id:user.id}) }}"  class="btn btn-success">PROMOTE</a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
