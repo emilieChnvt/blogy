@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Form\PostType;
 use App\Repository\PostRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -18,6 +21,7 @@ final class PostController extends AbstractController
         ]);
     }
 
+    #[Route('/post/show/{id}', name: 'app_post_show', priority: -1)]
     public function show(Post $post): Response
     {
         if(!$post){
@@ -26,5 +30,22 @@ final class PostController extends AbstractController
         return $this->render('post/show.html.twig', [
             'post' => $post,
         ]);
+    }
+
+    #[Route('/post/create', name: 'app_post_create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $post = new Post();
+        $postForm = $this->createForm(PostType::class, $post);
+        $postForm->handleRequest($request);
+        if($postForm->isSubmitted() && $postForm->isValid()){
+            $entityManager->persist($post);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_posts');
+        }
+        return $this->render('post/create.html.twig', [
+            'postForm' => $postForm->createView(),
+        ]);
+
     }
 }
