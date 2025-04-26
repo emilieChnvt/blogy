@@ -47,6 +47,7 @@ final class PostController extends AbstractController
         $postForm = $this->createForm(PostType::class, $post);
         $postForm->handleRequest($request);
         if($postForm->isSubmitted() && $postForm->isValid()){
+            $post->setAuthor($this->getUser());
             $entityManager->persist($post);
             $entityManager->flush();
             return $this->redirectToRoute('app_posts');

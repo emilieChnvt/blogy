@@ -4,8 +4,8 @@
 {% block body %}
 
     <div class="d-flex justify-content-center">
-        <h2>Edit your post</h2>
-        <div class="d-flex mt-3 justify-content-center   border border-2 p-4  px-5 rounded-3" style="width: fit-content">
+        <div class="d-flex flex-column mt-3 justify-content-center   border border-2 p-4  px-5 rounded-3" style="width: fit-content">
+            <h2 class="mb-4">Edit your post</h2>
 
             {{ form_start(postForm) }}
 
@@ -14,7 +14,7 @@
             <p class="fw-bolder mt-4">{{ form_label(postForm.content) }}</p>
             {{ form_widget(postForm.content, {'attr': {'style': 'background-color: #f8f9fa;'}}) }}
 
-            <button type="submit" class="btn btn-success mt-5">Create a Post</button>
+            <button type="submit" class="btn btn-success mt-5">Edit your Post</button>
             {{ form_end(postForm) }}
         </div>
     </div>
