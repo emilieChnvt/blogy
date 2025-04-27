@@ -32,7 +32,7 @@
     <div class="d-flex  justify-content-between w-100 border border-1 p-4 gap-2">
        <div class="d-flex flex-wrap gap-3 w-75" >
            {% for comment in post.comments %}
-               <div class=" d-flex flex-column  justify-content-center border p-2 " style="height: 120px; width: 270px" >
+               <div class=" d-flex flex-column  justify-content-center border p-2 " style="height: fit-content; width: 270px" >
 
                       <p class=""> {{comment.content}}</p>
                        <div class="d-flex mt-2 pt-2 border-top">
