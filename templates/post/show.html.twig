@@ -9,7 +9,7 @@
         je suis l'artcile
         <div class="card-body">
             {% for image in post.images %}
-                <img src="{{ vich_uploader_asset(image, 'imageFile') }}" alt="">
+                <img src="{{ vich_uploader_asset(image, 'imageFile') | imagine_filter('my_thumb')}}" alt="">
             {% endfor %}
 
             <h5 class="card-title">{{ post.title }}</h5>
