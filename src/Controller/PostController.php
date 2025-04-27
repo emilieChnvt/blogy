@@ -52,13 +52,16 @@ final class PostController extends AbstractController
     #[Route('/post/create', name: 'app_post_create')]
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
-        if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
-            throw new AccessDeniedException('Vous n\'avez pas les droits suffisants pour accéder à cette page.');
 
+        if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
+            return $this->redirectToRoute('app_login');
         }
         $post = new Post();
+
         $postForm = $this->createForm(PostType::class, $post);
         $postForm->handleRequest($request);
+
+
         if($postForm->isSubmitted() && $postForm->isValid()){
             $post->setAuthor($this->getUser());
             $entityManager->persist($post);
@@ -78,8 +81,7 @@ final class PostController extends AbstractController
             return $this->redirectToRoute('app_posts');
         }
         if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
-            throw new AccessDeniedException('Vous n\'avez pas les droits suffisants pour accéder à cette page.');
-
+            return $this->redirectToRoute('app_login');
         }
         $postForm = $this->createForm(PostType::class, $post);
         $postForm->handleRequest($request);

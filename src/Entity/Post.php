@@ -19,19 +19,12 @@ class Post
 
     #[Assert\Length(min:3, max: 10,)]
     #[ORM\Column(length: 255)]
-    #[Assert\Regex(
-        pattern: "/\bchoucroute\b/i",  // "i" pour insensibilité à la casse
-        message: "Le titre ne peut pas contenir le mot 'choucroute'."
-    )]
+
     private ?string $title = null;
 
 
     #[Assert\Length(min:15)]
     #[ORM\Column(length: 255)]
-    #[Assert\Regex(
-        pattern: "/\bpastèque\b/i",
-        message: "Le contenu ne peut pas contenir le mot 'pastèque'."
-    )]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
@@ -52,7 +45,7 @@ class Post
     /**
      * @var Collection<int, Like>
      */
-    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'post')]
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'post', cascade: ['remove'])]
     private Collection $likes;
 
     public function __construct()

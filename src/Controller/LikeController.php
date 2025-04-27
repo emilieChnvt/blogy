@@ -36,10 +36,9 @@ class LikeController extends AbstractController
         }
 
         $manager->flush();
-
         return $this->json([
             'isLiked' => $isLiked,
-            'count'=>$likeRepository->count(['post' => $post])
+
         ]);
     }
 }

@@ -16,6 +16,7 @@
                     {% else %}
                         <button type="submit" class="btn btn-primary" id="btnLike-{{ post.id }}" onclick="toggleLike({{ post.id }})">👍</button>
                     {% endif %}
+                    <p id="like-count-{{ post.id }}">{{ post.likes.count}}</p>
                 </div>
 
                 <div class="card-body d-flex">
@@ -43,6 +44,8 @@
     <script>
         function toggleLike(postId) {
             var button = document.getElementById('btnLike-' + postId);
+            var likeCountElement = document.getElementById('like-count-' + postId);
+
 
             fetch('{{ path('post_like', {id: '__postId__'}) }}'.replace('__postId__', postId), {
                 method: 'POST',
@@ -56,9 +59,12 @@
                     if (data.isLiked) {
                         button.classList.remove('btn-primary');
                         button.classList.add('btn-success');
+
+
                     } else {
                         button.classList.remove('btn-success');
                         button.classList.add('btn-primary');
+
                     }
                 })
 
