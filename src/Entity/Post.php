@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,10 +15,23 @@ class Post
     #[ORM\Column]
     private ?int $id = null;
 
+
+
+    #[Assert\Length(min:3, max: 10,)]
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(
+        pattern: "/\bchoucroute\b/i",  // "i" pour insensibilité à la casse
+        message: "Le titre ne peut pas contenir le mot 'choucroute'."
+    )]
     private ?string $title = null;
 
+
+    #[Assert\Length(min:15)]
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(
+        pattern: "/\bpastèque\b/i",
+        message: "Le contenu ne peut pas contenir le mot 'pastèque'."
+    )]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
@@ -27,13 +40,13 @@ class Post
     /**
      * @var Collection<int, Comment>
      */
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post')]
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post',cascade: ['remove'])]
     private Collection $comments;
 
     /**
      * @var Collection<int, Image>
      */
-    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'post')]
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'post', cascade: ['remove'])]
     private Collection $images;
 
     public function __construct()
