@@ -13,18 +13,19 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class CommentController extends AbstractController
 {
-    #[Route('/comment/delete/{id}', name: 'app_comment_delete')]
+    #[Route('/comment/delete/{id}', name: 'app_comment_delete', priority: 2)]
     public function delete(Comment $comment, EntityManagerInterface $manager): Response
     {
         if($comment){
+            $commentId = $comment->getPost()->getId();
             $manager->remove($comment);
             $manager->flush();
         }
 
-        return $this->redirectToRoute('app_post_show', ['id' => $comment->getPost()->getId()]);
+        return $this->redirectToRoute('app_post_show', ['id' => $commentId]);
     }
 
-    #[Route('/comment/edit/{id}', name: 'app_comment_edit')]
+    #[Route('/comment/edit/{id}', name: 'app_comment_edit', priority: 2)]
     public function edit(Comment $comment, Request $request, EntityManagerInterface $manager): Response
     {
         if($comment){
