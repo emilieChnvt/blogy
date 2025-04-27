@@ -1,0 +1,20 @@
+{# templates/profile/profile.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ app.user.username }}{% endblock %}
+
+{% block body %}
+    <h1>Welcome {{ app.user.username }}</h1>
+
+    <p><strong>Email :</strong> {{ app.user.email }}</p>
+
+    {% for role in app.user.roles %}
+    <p><strong>Roles :</strong> {{ role }}</p>
+    {% endfor %}
+
+
+
+    <a href="{{ path('app_profile_addimageprofile', {id: app.user.id}) }}" class="btn btn-primary">Ajouter une image de profil</a>
+{% endblock %}
+

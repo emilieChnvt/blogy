@@ -51,6 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'author', orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\OneToOne(inversedBy: 'profile', cascade: ['persist', 'remove'])]
+    private ?Image $imageProfile = null;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -200,6 +203,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $comment->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImageProfile(): ?Image
+    {
+        return $this->imageProfile;
+    }
+
+    public function setImageProfile(?Image $imageProfile): static
+    {
+        $this->imageProfile = $imageProfile;
 
         return $this;
     }

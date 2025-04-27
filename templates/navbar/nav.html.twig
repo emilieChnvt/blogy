@@ -1,9 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand fw-bold fs-2" href="{{ path('app_posts') }}">Blogy</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 {% if app.user %}
@@ -16,6 +14,19 @@
                 <a class="nav-link active" aria-current="page" href="{{ path('app_logout') }}">Logout</a>
 
             </div>
+        </div>
+        <div class="">
+            {% if app.user %}
+                {% if app.user.imageProfile %}
+                    <img src="{{ vich_uploader_asset(app.user.imageProfile, 'imageFile') | imagine_filter('profile') }}" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;" alt="Profile Image">
+                {% else %}
+                    <p>Aucune image de profil.</p>
+                {% endif %}
+            {% endif %}
+
+            {% if app.user %}
+                <a href="{{ path('profile', {id : app.user.id}) }}">{{ app.user.username }}</a>
+            {% endif %}
         </div>
     </div>
 </nav>

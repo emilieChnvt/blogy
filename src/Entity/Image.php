@@ -35,6 +35,9 @@ class Image
     #[ORM\ManyToOne(inversedBy: 'images')]
     private ?Post $post = null;
 
+    #[ORM\OneToOne(mappedBy: 'imageProfile', cascade: ['persist', 'remove'])]
+    private ?User $profile = null;
+
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the update. If this
@@ -88,6 +91,28 @@ class Image
     public function setPost(?Post $post): static
     {
         $this->post = $post;
+
+        return $this;
+    }
+
+    public function getProfile(): ?User
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?User $profile): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($profile === null && $this->profile !== null) {
+            $this->profile->setImageProfile(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($profile !== null && $profile->getImageProfile() !== $this) {
+            $profile->setImageProfile($this);
+        }
+
+        $this->profile = $profile;
 
         return $this;
     }
