@@ -192,4 +192,14 @@ class Post
 
         return $this;
     }
+
+    public function isLikedBy(User $user): bool
+    {
+        foreach ($this->likes as $like) {
+            if ($like->getAuthor() === $user) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
