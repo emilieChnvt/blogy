@@ -11,12 +11,23 @@
                     <h5 class="card-title">{{ post.title }}</h5>
                     <p class="card-text"> {{ post.content }}</p>
 
-                    {% if post.likes %}
-                        <button type="submit" class="btn btn-success" id="btnLike-{{ post.id }}" onclick="toggleLike({{ post.id }})">👍</button>
-                    {% else %}
-                        <button type="submit" class="btn btn-primary" id="btnLike-{{ post.id }}" onclick="toggleLike({{ post.id }})">👍</button>
+                    {% if app.user %}
+                        {% if post.isLikedBy(app.user) %}
+                            <a href="{{ path('post_like', {id:post.id}) }}" class="btn btn-success btnLike">
+                                <span class="nbrLikes">👍{{ post.likes|length }}</span>
+
+                            </a>
+                            {% else %}
+                                <a href="{{ path('post_like', {id:post.id}) }}" class="btn btn-primary btnLike">
+                                    <span class="nbrLikes">👍{{ post.likes|length }}</span>
+
+                                </a>
+
+                        {% endif %}
+                        {% else %}
+                        <p><strong>Likes : {{ post.likes|length }}</strong></p>
+
                     {% endif %}
-                    <p id="like-count-{{ post.id }}">{{ post.likes.count}}</p>
                 </div>
 
                 <div class="card-body d-flex">
@@ -42,28 +53,27 @@
     </div>
 
     <script>
-        function toggleLike(postId) {
-            var button = document.getElementById('btnLike-' + postId);
-            var likeCountElement = document.getElementById('like-count-' + postId);
+        const boutons = document.querySelectorAll('.btnLike')
+        boutons.forEach((bouton)=>{
+            bouton.addEventListener('click', toggleLike)
+        })
 
 
-            fetch('{{ path('post_like', {id: '__postId__'}) }}'.replace('__postId__', postId), {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+        function toggleLike(event) {
+            event.preventDefault()
 
-            })
+            fetch(this.href)
                 .then(response => response.json())
                 .then(data => {
+                    this.querySelector('.nbrLikes').innerHTML = '👍'+data.count
+
+                    console.log(data)
                     if (data.isLiked) {
-                        button.classList.remove('btn-primary');
-                        button.classList.add('btn-success');
-
-
+                        this.classList.remove('btn-primary')
+                        this.classList.add('btn-success')
                     } else {
-                        button.classList.remove('btn-success');
-                        button.classList.add('btn-primary');
+                        this.classList.remove('btn-success')
+                        this.classList.add('btn-primary')
 
                     }
                 })

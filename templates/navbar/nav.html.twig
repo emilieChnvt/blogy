@@ -19,8 +19,6 @@
             {% if app.user %}
                 {% if app.user.imageProfile %}
                     <img src="{{ vich_uploader_asset(app.user.imageProfile, 'imageFile') | imagine_filter('profile') }}" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;" alt="Profile Image">
-                {% else %}
-                    <p>Aucune image de profil.</p>
                 {% endif %}
             {% endif %}
 
