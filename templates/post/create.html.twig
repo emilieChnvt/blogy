@@ -8,6 +8,9 @@
             <h2 class="mb-5">Create a Post</h2>
 
             {{ form_start(postForm) }}
+
+
+
             {{ form_row(postForm.title, {'attr': {'style': 'background-color: #f8f9fa;'}}) }}
             {{ form_row(postForm.content, {'attr': {'style': 'background-color: #f8f9fa;'}}) }}
             <button type="submit" class="btn btn-success mt-5">Create a Post</button>

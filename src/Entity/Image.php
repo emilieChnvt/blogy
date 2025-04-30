@@ -6,6 +6,7 @@ namespace App\Entity;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[Vich\Uploadable]
 
@@ -35,8 +36,9 @@ class Image
     #[ORM\ManyToOne(inversedBy: 'images')]
     private ?Post $post = null;
 
-    #[ORM\OneToOne(mappedBy: 'imageProfile', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: User::class, mappedBy: 'imageProfile', cascade: ['persist', 'remove'])]
     private ?User $profile = null;
+
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance

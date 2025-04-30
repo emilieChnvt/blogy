@@ -51,7 +51,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'author', orphanRemoval: true)]
     private Collection $comments;
 
-    #[ORM\OneToOne(inversedBy: 'profile', cascade: ['persist', 'remove'])]
+
+    #[ORM\OneToOne(targetEntity: Image::class, inversedBy: 'profile', cascade: ['persist', 'remove'])]
     private ?Image $imageProfile = null;
 
     /**

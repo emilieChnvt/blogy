@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -19,12 +20,20 @@ class Post
 
     #[Assert\Length(min:3, max: 10,)]
     #[ORM\Column(length: 255)]
-
+    #[Assert\Regex(
+        pattern: '/^(?!.*\b(choucroute)\b).*/i',
+        message: 'Les mots "choucroute" est interdit.'
+    )]
+    #[Assert\Unique(fields: ['title'], message: 'There is already a post with this title')]
     private ?string $title = null;
 
 
     #[Assert\Length(min:15)]
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(
+        pattern: '/^(?!.*\b(pastèque)\b).*/i',
+        message: 'Les mots "pastèque" est interdit.'
+    )]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]

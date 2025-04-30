@@ -123,6 +123,7 @@ final class PostController extends AbstractController
         $imageForm = $this->createForm(ImageType::class, $image);
         $imageForm->handleRequest($request);
         if($imageForm->isSubmitted() && $imageForm->isValid()){
+
             $image->setPost($post);
             $entityManager->persist($image);
             $entityManager->flush();
@@ -132,5 +133,21 @@ final class PostController extends AbstractController
             'post' => $post,
             'imageForm' => $imageForm->createView(),
         ]);
+    }
+
+    #[Route('/post/image/delete/{id}', name: 'app_post_deleteImage', methods: ['POST'])]
+    public function deleteImage(Image $image, EntityManagerInterface $entityManager): Response
+    {
+        if(!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+        $post = $image->getPost();
+        if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
+            return $this->redirectToRoute('app_login');
+        }
+        $entityManager->remove($image);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_post_show', ['id' => $post->getId()]);
+
     }
 }

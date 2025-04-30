@@ -16,45 +16,45 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class ProfileController extends AbstractController
 {
-    #[Route('/profile/{id}', name: 'profile')]
+    #[Route('/profile/{id}', name: 'profile', priority:  -1)]
     public function profile(): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-        $user = $this->getUser();
+
 
 
 
         return $this->render('profile/profile.html.twig', [
-            'user' => $user,
+
         ]);
     }
 
-    #[Route('/profile/addImageProfile/{id}', name: 'app_profile_addimageprofile')]
+    #[Route('/profile/addimage', name: 'app_profile_image')]
     public function addImageProfile(
-        int $id,
         EntityManagerInterface $manager,
         Request $request,
-        UserRepository $userRepository,
-        PostRepository $postRepository
     ): Response {
-        $user = $userRepository->find($id);
 
-        if (!$user) {
-            throw $this->createNotFoundException('Utilisateur non trouvé.');
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
         }
         $imageProfile = new Image();
+
+        if($this->getUser()->getImageProfile()){
+            $this->getUser()->setImageProfile(null);
+        }
         $imageForm = $this->createForm(ImageType::class, $imageProfile);
         $imageForm->handleRequest($request);
 
         if ($imageForm->isSubmitted() && $imageForm->isValid()) {
-            $imageProfile->setProfile($user);
+            $imageProfile->setProfile($this->getUser());
 
             $manager->persist($imageProfile);
             $manager->flush();
 
-            return $this->redirectToRoute('profile', ['id' => $user->getId()]);
+            return $this->redirectToRoute('profile', ['id' => $this->getUser()->getId()]);
         }
 
         return $this->render('profile/add_image.html.twig', [
