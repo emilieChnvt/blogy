@@ -30,8 +30,9 @@ final class PostController extends AbstractController
     }
 
     #[Route('/post/show/{id}', name: 'app_post_show', priority: -1)]
-    public function show(Post $post, EntityManagerInterface $manager, Request $request): Response
+    public function show(Post $post, PostRepository $postRepository, EntityManagerInterface $manager, Request $request): Response
     {
+
 
         $comment = new Comment();
         $commentForm = $this->createForm(CommentType::class, $comment);
@@ -43,6 +44,7 @@ final class PostController extends AbstractController
            $manager->flush();
            return $this->redirectToRoute('app_post_show', ['id' => $post->getId()]);
        }
+
         return $this->render('post/show.html.twig', [
             'post' => $post,
             'commentForm' => $commentForm->createView(),
@@ -50,7 +52,7 @@ final class PostController extends AbstractController
     }
 
     #[Route('/post/create', name: 'app_post_create')]
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(PostRepository $postRepository, EntityManagerInterface $entityManager, Request $request): Response
     {
 
         if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
@@ -63,6 +65,11 @@ final class PostController extends AbstractController
 
 
         if($postForm->isSubmitted() && $postForm->isValid()){
+            $existingPost = $postRepository->findOneBy(['title' => $post->getTitle()]);
+            if($existingPost){
+                return $this->redirectToRoute('app_post_create', );
+            }
+
             $post->setAuthor($this->getUser());
             $entityManager->persist($post);
             $entityManager->flush();

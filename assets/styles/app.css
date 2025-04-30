@@ -1,0 +1,7 @@
+body{
+    background: linear-gradient(blue, pink);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+
+}

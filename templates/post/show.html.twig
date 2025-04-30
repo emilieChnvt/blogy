@@ -9,14 +9,32 @@
         je suis l'artcile
         <div class="card-body">
             <div class="d-flex gap-3 flex-wrap">
-                {% for image in post.images %}
-                    <img src="{{ vich_uploader_asset(image, 'imageFile') | imagine_filter('my_thumb')}}" alt="">
-                    <form method="POST" action="{{ path('app_post_deleteImage', {'id': image.id}) }}">
 
-                        <button class="bg-transparent border-0"><svg xmlns="http://www.w3.org/2000/svg" width="15px" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg></button>
+            {% if post.images %}
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for image in post.images %}
+                            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                <img src="{{ vich_uploader_asset(image, 'imageFile') | imagine_filter('caroussel') }}" class="d-block w-100" alt="...">
+                            </div>
+                        {% endfor %}
+                    </div>
 
-                    </form>
-                {% endfor %}
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                {% endif %}
+
+
+
+
+
 
 
             </div>
@@ -51,7 +69,11 @@
                        </div>
                    <div class="d-flex justify-content-end align-items-center gap-2">
                        <p class="fst-italic">by {{ comment.author.username }}</p>
-                       <img src="{{ vich_uploader_asset(app.user.imageProfile) | imagine_filter('profile') }}"  class="rounded-5" alt="">
+                        {% if app.user.imageProfile %}
+                            <img src="{{ vich_uploader_asset(app.user.imageProfile) | imagine_filter('profile') }}"  class="rounded-5" alt="">
+
+
+                        {% endif %}
                    </div>
                </div>
            {% endfor %}

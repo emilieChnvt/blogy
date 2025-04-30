@@ -1,0 +1,8 @@
+
+.linkProfile{
+    padding: 15px 20px; !important;
+}
+.linkProfile:hover{
+    color: blue !important;
+    background-color: white;
+}

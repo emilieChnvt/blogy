@@ -3,18 +3,17 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container my-5">
+        <div class="text-center p-4 bg-light rounded shadow-sm">
+            <h1 class="display-5 fw-bold">Bienvenue sur notre blog</h1>
+            <p class="lead mt-3">
+                Des idées fraîches, des articles inspirants — <br class="d-none d-md-block">
+                inscrivez-vous pour ne rien manquer !
+            </p>
+            <a href="{{ path('app_register') }}" class="btn btn-primary mt-3">
+                Rejoindre la communauté
+            </a>
+        </div>
+    </div>
 
-<div class="example-wrapper">
-    <h1 class="text-bg-danger">Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li class="">Your controller at <code>/Users/emi/PhpstormProjects/symfonyProjects/blogy/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>/Users/emi/PhpstormProjects/symfonyProjects/blogy/templates/home/index.html.twig</code></li>
-    </ul>
-</div>
 {% endblock %}

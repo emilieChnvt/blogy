@@ -24,7 +24,6 @@ class Post
         pattern: '/^(?!.*\b(choucroute)\b).*/i',
         message: 'Les mots "choucroute" est interdit.'
     )]
-    #[Assert\Unique(fields: ['title'], message: 'There is already a post with this title')]
     private ?string $title = null;
 
 

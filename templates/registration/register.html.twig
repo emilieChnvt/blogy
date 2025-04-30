@@ -3,18 +3,42 @@
 {% block title %}Register{% endblock %}
 {% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
 {% block body %}
-    <h1>Register</h1>
 
-    {{ form_errors(registrationForm) }}
+    <div class="d-flex justify-content-center w-100">
+        <div class="w-25 p-5 rounded-2 bg-white">
+            <h3 class="h3 mb-3 font-weight-normal">Register</h3>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            {{ form_start(registrationForm) }}
 
-        <button type="submit" class="btn btn-success ">Register</button>
-    {{ form_end(registrationForm) }}
+            {{ form_errors(registrationForm) }}
+
+            {{ form_row(registrationForm.username, {
+                attr: {'class': 'form-control mb-3'},
+                label_attr: {'class': 'form-label'}
+            }) }}
+
+            {{ form_row(registrationForm.email, {
+                attr: {'class': 'form-control mb-3'},
+                label_attr: {'class': 'form-label'}
+            }) }}
+
+            {{ form_row(registrationForm.plainPassword, {
+                label: 'Password',
+                attr: {'class': 'form-control mb-3'},
+                label_attr: {'class': 'form-label'}
+            }) }}
+
+            {{ form_row(registrationForm.agreeTerms, {
+                label_attr: {'class': 'form-check-label'},
+                row_attr: {'class': 'form-check mb-3'}
+            }) }}
+
+            <p>Already have an account ? <a href="{{ path('app_login') }}">Log In</a></p>
+
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+
 {% endblock %}
