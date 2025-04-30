@@ -135,12 +135,13 @@ final class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/post/image/delete/{id}', name: 'app_post_deleteImage', methods: ['POST'])]
+    #[Route('/post/image/delete/{id}', name: 'app_post_deleteImage')]
     public function deleteImage(Image $image, EntityManagerInterface $entityManager): Response
     {
         if(!$this->getUser()){
             return $this->redirectToRoute('app_login');
         }
+
         $post = $image->getPost();
         if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
             return $this->redirectToRoute('app_login');
