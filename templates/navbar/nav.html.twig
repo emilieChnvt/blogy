@@ -11,6 +11,7 @@
                 {% if app.user %}
                     {% if 'ROLE_ADMIN' in app.user.roles %}
                         <a class="nav-link text-white" href="{{ path('app_post_create') }}">Create a post</a>
+                        <a class="nav-link text-white" href="{{ path('app_admin') }}">Dashboard</a>
                     {% endif %}
                 {% endif %}
             </div>

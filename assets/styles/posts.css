@@ -1,0 +1,6 @@
+.posts{
+    transition: .5s;
+}
+.posts:hover{
+    scale: 1.2;
+}

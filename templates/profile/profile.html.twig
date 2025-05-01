@@ -5,16 +5,21 @@
 {% block title %}Profil de {{ app.user.username }}{% endblock %}
 
 {% block body %}
-    <h1>Welcome {{ app.user.username }}</h1>
+<div class="d-flex justify-content-center  w-100">
 
-    <p><strong>Email :</strong> {{ app.user.email }}</p>
+    <div class="w-25 p-5 rounded-2 bg-white">
+       <h1>Welcome {{ app.user.username }}</h1>
 
-    {% for role in app.user.roles %}
-    <p><strong>Roles :</strong> {{ role }}</p>
-    {% endfor %}
+       <p><strong>Email :</strong> {{ app.user.email }}</p>
+
+       {% for role in app.user.roles %}
+           <p><strong>Roles :</strong> {{ role }}</p>
+       {% endfor %}
 
 
 
-    <a href="{{ path('app_profile_image') }}" class="btn btn-primary">Ajouter une image de profil</a>
+       <a href="{{ path('app_profile_image') }}" class="btn btn-primary">Ajouter une image de profil</a>
+   </div>
+</div>
 {% endblock %}
 

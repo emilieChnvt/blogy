@@ -3,5 +3,13 @@
 {% block title %}Hello ProfileController!{% endblock %}
 
 {% block body %}
-    {{ form(imageForm) }}
+<div class="d-flex justify-content-center  w-100">
+
+    <div class="w-25 p-5 rounded-2 bg-white">
+        <h3>Add an image to your profile</h3>
+        {{ form_start(imageForm) }}
+            {{ form_widget(imageForm) }}
+        {{ form_end(imageForm) }}
+    </div>
+</div>
 {% endblock %}

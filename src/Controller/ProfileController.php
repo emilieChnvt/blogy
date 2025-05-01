@@ -42,13 +42,13 @@ final class ProfileController extends AbstractController
         }
         $imageProfile = new Image();
 
-        if($this->getUser()->getImageProfile()){
-            $this->getUser()->setImageProfile(null);
-        }
         $imageForm = $this->createForm(ImageType::class, $imageProfile);
         $imageForm->handleRequest($request);
 
         if ($imageForm->isSubmitted() && $imageForm->isValid()) {
+            if($this->getUser()->getImageProfile()){
+                $this->getUser()->setImageProfile(null);
+            }
             $imageProfile->setProfile($this->getUser());
 
             $manager->persist($imageProfile);
