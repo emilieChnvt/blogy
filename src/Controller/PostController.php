@@ -10,6 +10,7 @@ use App\Form\ImageType;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,13 +20,20 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 final class PostController extends AbstractController
 {
     #[Route('/posts', name: 'app_posts')]
-    public function index(PostRepository $postRepository): Response
+    public function index(PostRepository $postRepository, PaginatorInterface $paginator, Request $request): Response
     {
         if(!$this->getUser()){
             return $this->redirectToRoute('app_login');
         }
+
+        $pagination = $paginator->paginate(
+            $postRepository->findAll(),
+            $request->query->getInt('page', 1),
+            3
+        );
+
         return $this->render('post/index.html.twig', [
-            'posts' => $postRepository->findAll(),
+            'pagination' => $pagination,
         ]);
     }
 
@@ -132,7 +140,6 @@ final class PostController extends AbstractController
         $imageForm = $this->createForm(ImageType::class, $image);
         $imageForm->handleRequest($request);
         if($imageForm->isSubmitted() && $imageForm->isValid()){
-
 
             $image->setPost($post);
             $entityManager->persist($image);
