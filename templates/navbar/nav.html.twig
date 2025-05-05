@@ -34,7 +34,7 @@
                <div class="  profile ">
                    {% if app.user.imageProfile %}
                        <a href="{{ path('profile', {id : app.user.id}) }}" class="ms-2  text-white text-decoration-none linkProfile border rounded-2">{{ app.user.username }}
-                        <img src="{{ vich_uploader_asset(app.user.imageProfile, 'imageFile') | imagine_filter('profile')}}" class="rounded-5 mx-3">
+                        <img src="{{ vich_uploader_asset(app.user.imageProfile, 'imageFile') | imagine_filter('profile')}}" class="rounded-circle">
                        </a>
                    {% else %}
                        <a href="{{ path('profile', {id : app.user.id}) }}" class="ms-2  text-white text-decoration-none linkProfile border rounded-2">{{ app.user.username }}</a>

@@ -7,14 +7,22 @@
         <div class="d-flex flex-column mt-3 justify-content-center border border-2 p-4 px-5 rounded-3" style="width: fit-content">
             <h2 class="mb-5">Create a Post</h2>
 
-            {{ form_start(postForm) }}
+            {{ form_start(postForm, {attr :{novalidate:'novalidate'}}) }}
 
+            {{ form_errors(postForm) }}
 
+            {{ form_label(postForm.title) }}
+            {{ form_widget(postForm.title, {'attr': {'style': 'background-color: #f8f9fa;'}}) }}
+            {{ form_errors(postForm.title) }}
 
-            {{ form_row(postForm.title, {'attr': {'style': 'background-color: #f8f9fa;'}}) }}
-            {{ form_row(postForm.content, {'attr': {'style': 'background-color: #f8f9fa;'}}) }}
+            {{ form_label(postForm.content) }}
+            {{ form_widget(postForm.content, {'attr': {'style': 'background-color: #f8f9fa;'}}) }}
+            {{ form_errors(postForm.content) }}
+
             <button type="submit" class="btn btn-success mt-5">Create a Post</button>
+
             {{ form_end(postForm) }}
+
         </div>
     </div>
 

@@ -20,6 +20,7 @@ class ImageType extends AbstractType
             ->add('imageFile', VichFileType::class,[
                 'label' => 'Image',
                 'required' => false,
+
             ])
             ->add('Submit', SubmitType::class)
 

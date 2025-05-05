@@ -11,7 +11,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[Vich\Uploadable]
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
-class Image
+class Image implements \Serializable
 {
     #[ORM\Id]
     #[ORM\Column]
@@ -23,6 +23,7 @@ class Image
     // NOTE: This is not a mapped field of entity metadata, just a simple property.
     #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'imageName', size: 'imageSize')]
     private ?File $imageFile = null;
+
 
     #[ORM\Column(nullable: true)]
     private ?string $imageName = null;
@@ -127,5 +128,27 @@ class Image
     public function setId(?int $id): void
     {
         $this->id = $id;
+    }
+
+    public function serialize()
+    {
+        // TODO: Implement serialize() method.
+    }
+
+    public function unserialize(string $data)
+    {
+        // TODO: Implement unserialize() method.
+    }
+
+    public function __serialize(): array
+    {
+        return [];
+
+        // TODO: Implement __serialize() method.
+    }
+
+    public function __unserialize(array $data): void
+    {
+        // TODO: Implement __unserialize() method.
     }
 }

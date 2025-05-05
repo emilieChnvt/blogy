@@ -8,21 +8,13 @@ liip_imagine :
     filter_sets :
         cache : ~
 
-        # the name of the "filter set"
         caroussel :
 
-            # adjust the image quality to 75%
             quality : 75
 
-            # list of transformations to apply (the "filters")
             filters :
 
-                # create a thumbnail: set size to 120x90 and use the "outbound" mode
-                # to crop the image when the size ratio of the input differs
                 thumbnail  : { size : [480, 200], mode : outbound }
-
-                # create a 2px black border: center the thumbnail on a black background
-                # 4px larger to create a 2px border around the final image
                 background : { size : [485, 210], position : center, color : '#000000' }
         profile:
 
@@ -30,9 +22,5 @@ liip_imagine :
 
             filters:
 
+                thumbnail: { size: [ 25, 25 ], mode: outbond }
 
-                thumbnail: { size: [ 20, 20 ], mode: outbound }
-
-
-
-                background: { size: [ 25, 25 ], position: center, color: '#000000' }

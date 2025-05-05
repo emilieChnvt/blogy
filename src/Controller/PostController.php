@@ -77,7 +77,7 @@ final class PostController extends AbstractController
             return $this->redirectToRoute('app_posts');
         }
         return $this->render('post/create.html.twig', [
-            'postForm' => $postForm->createView(),
+            'postForm' => $postForm,
         ]);
 
     }
@@ -127,10 +127,12 @@ final class PostController extends AbstractController
         if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
             return $this->redirectToRoute('app_login');
         }
+
         $image = new Image();
         $imageForm = $this->createForm(ImageType::class, $image);
         $imageForm->handleRequest($request);
         if($imageForm->isSubmitted() && $imageForm->isValid()){
+
 
             $image->setPost($post);
             $entityManager->persist($image);

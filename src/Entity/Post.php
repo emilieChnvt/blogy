@@ -18,7 +18,7 @@ class Post
 
 
 
-    #[Assert\Length(min:3, max: 10,)]
+    #[Assert\Length(min:3, max: 10, )]
     #[ORM\Column(length: 255)]
     #[Assert\Regex(
         pattern: '/^(?!.*\b(choucroute)\b).*/i',
@@ -27,7 +27,11 @@ class Post
     private ?string $title = null;
 
 
-    #[Assert\Length(min:15)]
+    #[Assert\Length(
+        min:15,
+        max:100,
+        minMessage: 'Le contenu doit atteindre les 15 charactères minimum')
+    ]
     #[ORM\Column(length: 255)]
     #[Assert\Regex(
         pattern: '/^(?!.*\b(pastèque)\b).*/i',
