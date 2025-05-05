@@ -7,6 +7,7 @@
 // Avec Vite (ex. : dans `resources/js/app.js`)
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap';
 
 import './styles/app.css';
 
