@@ -26,17 +26,17 @@ return [
         'version' => '8.0.13',
     ],
     'bootstrap' => [
-        'version' => '5.3.5',
+        'version' => '5.3.6',
     ],
     '@popperjs/core' => [
         'version' => '2.11.8',
     ],
     'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '5.3.5',
+        'version' => '5.3.6',
         'type' => 'css',
     ],
     'bootstrap-icons/font/bootstrap-icons.min.css' => [
-        'version' => '1.11.3',
+        'version' => '1.12.1',
         'type' => 'css',
     ],
 ];
